@@ -13,5 +13,4 @@ const nextConfig = {
   },
 }
 
-// Usar export default em vez de module.exports para arquivos .mjs
-export default nextConfig
+module.exports = nextConfig
