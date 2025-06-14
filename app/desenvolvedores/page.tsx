@@ -1,4 +1,4 @@
-import { FilterSidebar } from "@/components/filter-sidebar"
+import { FilterBar } from "@/components/filter-bar"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -110,15 +110,6 @@ const developerFilters = [
     ],
   },
   {
-    name: "Disponibilidade",
-    type: "checkbox" as const,
-    options: [
-      { id: "immediate", label: "Imediata" },
-      { id: "30days", label: "Em 30 dias" },
-      { id: "60days", label: "Em 60 dias" },
-    ],
-  },
-  {
     name: "Tipo de trabalho",
     type: "checkbox" as const,
     options: [
@@ -138,67 +129,63 @@ export default function DesenvolvedoresPage() {
           <p className="text-muted-foreground">Encontre os melhores talentos para o seu projeto ou empresa</p>
         </div>
 
-        <div className="flex flex-col md:flex-row gap-6">
-          <FilterSidebar filters={developerFilters} />
+        <FilterBar filters={developerFilters} />
 
-          <div className="flex-1">
-            <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-              {developers.map((developer) => (
-                <Card key={developer.id} className="overflow-hidden">
-                  <CardHeader className="p-0">
-                    <div className="h-12 bg-primary" />
-                  </CardHeader>
-                  <CardContent className="pt-0 relative">
-                    <div className="flex justify-center -mt-8">
-                      <Image
-                        src={developer.image || "/placeholder.svg"}
-                        alt={developer.name}
-                        width={80}
-                        height={80}
-                        className="rounded-full border-4 border-background"
-                      />
-                    </div>
-                    <div className="text-center mt-2 space-y-1">
-                      <h3 className="font-bold text-lg">{developer.name}</h3>
-                      <p className="text-muted-foreground">{developer.role}</p>
-                    </div>
-                    <div className="mt-4 space-y-2">
-                      <div className="flex items-center text-sm">
-                        <MapPin className="h-4 w-4 mr-2 text-muted-foreground" />
-                        <span>{developer.location}</span>
-                      </div>
-                      <div className="flex items-center text-sm">
-                        <Briefcase className="h-4 w-4 mr-2 text-muted-foreground" />
-                        <span>{developer.experience} de experiência</span>
-                      </div>
-                      <div className="flex items-center text-sm">
-                        <Clock className="h-4 w-4 mr-2 text-muted-foreground" />
-                        <span>{developer.availability}</span>
-                      </div>
-                    </div>
-                    <div className="mt-4">
-                      <div className="flex flex-wrap gap-1">
-                        {developer.technologies.slice(0, 3).map((tech, index) => (
-                          <Badge key={index} variant="secondary">
-                            {tech}
-                          </Badge>
-                        ))}
-                        {developer.technologies.length > 3 && (
-                          <Badge variant="outline">+{developer.technologies.length - 3}</Badge>
-                        )}
-                      </div>
-                    </div>
-                  </CardContent>
-                  <CardFooter>
-                    <Button className="w-full">
-                      Ver perfil
-                      <ExternalLink className="h-4 w-4 ml-2" />
-                    </Button>
-                  </CardFooter>
-                </Card>
-              ))}
-            </div>
-          </div>
+        <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          {developers.map((developer) => (
+            <Card key={developer.id} className="overflow-hidden">
+              <CardHeader className="p-0">
+                <div className="h-12 bg-primary" />
+              </CardHeader>
+              <CardContent className="pt-0 relative">
+                <div className="flex justify-center -mt-8">
+                  <Image
+                    src={developer.image || "/placeholder.svg"}
+                    alt={developer.name}
+                    width={80}
+                    height={80}
+                    className="rounded-full border-4 border-background"
+                  />
+                </div>
+                <div className="text-center mt-2 space-y-1">
+                  <h3 className="font-bold text-lg">{developer.name}</h3>
+                  <p className="text-muted-foreground">{developer.role}</p>
+                </div>
+                <div className="mt-4 space-y-2">
+                  <div className="flex items-center text-sm">
+                    <MapPin className="h-4 w-4 mr-2 text-muted-foreground" />
+                    <span>{developer.location}</span>
+                  </div>
+                  <div className="flex items-center text-sm">
+                    <Briefcase className="h-4 w-4 mr-2 text-muted-foreground" />
+                    <span>{developer.experience} de experiência</span>
+                  </div>
+                  <div className="flex items-center text-sm">
+                    <Clock className="h-4 w-4 mr-2 text-muted-foreground" />
+                    <span>{developer.availability}</span>
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <div className="flex flex-wrap gap-1">
+                    {developer.technologies.slice(0, 3).map((tech, index) => (
+                      <Badge key={index} variant="secondary">
+                        {tech}
+                      </Badge>
+                    ))}
+                    {developer.technologies.length > 3 && (
+                      <Badge variant="outline">+{developer.technologies.length - 3}</Badge>
+                    )}
+                  </div>
+                </div>
+              </CardContent>
+              <CardFooter>
+                <Button className="w-full">
+                  Ver perfil
+                  <ExternalLink className="h-4 w-4 ml-2" />
+                </Button>
+              </CardFooter>
+            </Card>
+          ))}
         </div>
       </div>
     </div>

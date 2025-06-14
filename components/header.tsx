@@ -11,16 +11,12 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 
 export default function Header() {
   const pathname = usePathname()
-  // Simular usuário logado (em uma implementação real, você usaria um hook de autenticação)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
 
-  // Simular verificação de autenticação
   useEffect(() => {
-    // Verificar se há um token no localStorage (simulação)
     const token = localStorage.getItem("auth-token")
     setIsLoggedIn(!!token)
 
-    // Para demonstração, vamos setar como logado após 2 segundos
     setTimeout(() => {
       setIsLoggedIn(true)
     }, 2000)
@@ -35,25 +31,30 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
+        {/* Logo */}
         <div className="flex items-center gap-2">
           <Link href="/" className="flex items-center gap-2">
             <Code className="h-6 w-6 text-primary" />
             <span className="text-xl font-bold">DevMatch</span>
           </Link>
-          <nav className="hidden md:flex items-center gap-6 ml-6">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`text-sm font-medium transition-colors hover:text-primary ${
-                  pathname === item.href ? "text-primary" : "text-muted-foreground"
-                }`}
-              >
-                {item.name}
-              </Link>
-            ))}
-          </nav>
         </div>
+
+        {/* Navegação Central */}
+        <nav className="hidden md:flex items-center gap-8">
+          {navItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`text-sm font-medium transition-colors hover:text-primary ${
+                pathname === item.href ? "text-primary" : "text-muted-foreground"
+              }`}
+            >
+              {item.name}
+            </Link>
+          ))}
+        </nav>
+
+        {/* Ações do usuário */}
         <div className="flex items-center gap-3">
           <ModeToggle />
 

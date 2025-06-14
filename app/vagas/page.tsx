@@ -1,77 +1,90 @@
-import { FilterSidebar } from "@/components/filter-sidebar"
-import { Card, CardContent, CardFooter } from "@/components/ui/card"
+import { FilterBar } from "@/components/filter-bar"
+import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { MapPin, Building, Briefcase } from "lucide-react"
-import Image from "next/image"
+import { MapPin, Building, Briefcase, Clock, Bookmark } from "lucide-react"
 
 // Dados de exemplo
 const jobs = [
   {
     id: 1,
-    title: "Desenvolvedor Front-end React",
+    title: "Desenvolvedor React Sênior",
     company: "TechCorp",
-    logo: "/placeholder.svg?height=50&width=50",
-    location: "São Paulo, SP",
+    location: "São Paulo",
     type: "CLT",
-    level: "Pleno",
-    technologies: ["React", "TypeScript", "Tailwind CSS", "Redux"],
-    postedAt: "Há 2 dias",
+    workMode: "Híbrido",
+    level: "Sênior",
+    description:
+      "Buscamos um desenvolvedor React sênior para liderar projetos inovadores em nossa equipe de produtos digitais.",
+    technologies: ["React", "TypeScript", "Node.js", "AWS"],
+    postedAt: "2 dias atrás",
+    salary: "R$ 12.000 - R$ 18.000",
   },
   {
     id: 2,
     title: "Desenvolvedor Back-end Node.js",
     company: "InnovaSoft",
-    logo: "/placeholder.svg?height=50&width=50",
     location: "Remoto",
     type: "PJ",
-    level: "Sênior",
+    workMode: "Remoto",
+    level: "Pleno",
+    description:
+      "Oportunidade para desenvolvedor Node.js trabalhar em projetos de alta escala com tecnologias modernas.",
     technologies: ["Node.js", "Express", "MongoDB", "Docker"],
-    postedAt: "Há 1 semana",
+    postedAt: "1 semana",
+    salary: "R$ 8.000 - R$ 12.000",
   },
   {
     id: 3,
     title: "Desenvolvedor Full Stack",
     company: "WebSolutions",
-    logo: "/placeholder.svg?height=50&width=50",
-    location: "Rio de Janeiro, RJ",
+    location: "Rio de Janeiro",
     type: "CLT",
+    workMode: "Presencial",
     level: "Pleno/Sênior",
+    description: "Desenvolvedor full stack para atuar em projetos web modernos com stack completa JavaScript.",
     technologies: ["React", "Node.js", "PostgreSQL", "AWS"],
-    postedAt: "Há 3 dias",
+    postedAt: "3 dias",
+    salary: "R$ 10.000 - R$ 15.000",
   },
   {
     id: 4,
     title: "Desenvolvedor Mobile React Native",
     company: "AppMaster",
-    logo: "/placeholder.svg?height=50&width=50",
-    location: "Belo Horizonte, MG",
+    location: "Belo Horizonte",
     type: "PJ",
+    workMode: "Híbrido",
     level: "Pleno",
+    description: "Desenvolvedor mobile para criar aplicativos inovadores usando React Native e tecnologias modernas.",
     technologies: ["React Native", "TypeScript", "Firebase", "Jest"],
-    postedAt: "Há 5 dias",
+    postedAt: "5 dias",
+    salary: "R$ 9.000 - R$ 13.000",
   },
   {
     id: 5,
     title: "Engenheiro de Software Java",
     company: "Enterprise Solutions",
-    logo: "/placeholder.svg?height=50&width=50",
-    location: "Curitiba, PR",
+    location: "Curitiba",
     type: "CLT",
+    workMode: "Híbrido",
     level: "Sênior",
+    description: "Engenheiro de software para desenvolver soluções enterprise robustas usando Java e Spring.",
     technologies: ["Java", "Spring Boot", "Microservices", "Kubernetes"],
-    postedAt: "Há 1 dia",
+    postedAt: "1 dia",
+    salary: "R$ 14.000 - R$ 20.000",
   },
   {
     id: 6,
     title: "Desenvolvedor Python",
     company: "DataTech",
-    logo: "/placeholder.svg?height=50&width=50",
     location: "Remoto",
     type: "Freelance",
+    workMode: "Remoto",
     level: "Júnior/Pleno",
+    description: "Desenvolvedor Python para projetos de análise de dados e desenvolvimento web.",
     technologies: ["Python", "Django", "Flask", "SQL"],
-    postedAt: "Há 4 dias",
+    postedAt: "4 dias",
+    salary: "R$ 6.000 - R$ 10.000",
   },
 ]
 
@@ -99,14 +112,12 @@ const jobFilters = [
     ],
   },
   {
-    name: "Cidade",
-    type: "select" as const,
+    name: "Modalidade",
+    type: "checkbox" as const,
     options: [
-      { id: "sp", label: "São Paulo" },
-      { id: "rj", label: "Rio de Janeiro" },
-      { id: "mg", label: "Belo Horizonte" },
-      { id: "pr", label: "Curitiba" },
       { id: "remoto", label: "Remoto" },
+      { id: "presencial", label: "Presencial" },
+      { id: "hibrido", label: "Híbrido" },
     ],
   },
   {
@@ -129,67 +140,71 @@ export default function VagasPage() {
           <p className="text-muted-foreground">Encontre as melhores oportunidades de trabalho</p>
         </div>
 
-        <div className="flex flex-col md:flex-row gap-6">
-          <FilterSidebar filters={jobFilters} />
+        <FilterBar filters={jobFilters} />
 
-          <div className="flex-1">
-            <div className="grid gap-6">
-              {jobs.map((job) => (
-                <Card key={job.id}>
-                  <CardContent className="p-6">
-                    <div className="flex flex-col md:flex-row gap-4">
-                      <div className="flex-shrink-0">
-                        <Image
-                          src={job.logo || "/placeholder.svg"}
-                          alt={job.company}
-                          width={60}
-                          height={60}
-                          className="rounded-md"
-                        />
-                      </div>
-                      <div className="flex-1 space-y-2">
-                        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2">
-                          <div>
-                            <h3 className="font-bold text-lg">{job.title}</h3>
-                            <div className="flex items-center text-sm">
-                              <Building className="h-4 w-4 mr-1 text-muted-foreground" />
-                              <span>{job.company}</span>
-                            </div>
-                          </div>
-                          <div className="flex flex-col items-start sm:items-end gap-1">
-                            <Badge variant="outline">{job.type}</Badge>
-                            <span className="text-xs text-muted-foreground">{job.postedAt}</span>
-                          </div>
-                        </div>
+        <div className="grid gap-6">
+          {jobs.map((job) => (
+            <Card key={job.id} className="p-6">
+              <CardContent className="p-0">
+                <div className="flex flex-col space-y-4">
+                  {/* Header da vaga */}
+                  <div className="flex justify-between items-start">
+                    <h3 className="text-xl font-bold">{job.title}</h3>
+                    <Badge variant="secondary">{job.workMode}</Badge>
+                  </div>
 
-                        <div className="flex flex-wrap gap-4 text-sm">
-                          <div className="flex items-center">
-                            <MapPin className="h-4 w-4 mr-1 text-muted-foreground" />
-                            <span>{job.location}</span>
-                          </div>
-                          <div className="flex items-center">
-                            <Briefcase className="h-4 w-4 mr-1 text-muted-foreground" />
-                            <span>{job.level}</span>
-                          </div>
-                        </div>
+                  {/* Descrição */}
+                  <p className="text-muted-foreground">{job.description}</p>
 
-                        <div className="flex flex-wrap gap-1 pt-2">
-                          {job.technologies.map((tech, index) => (
-                            <Badge key={index} variant="secondary">
-                              {tech}
-                            </Badge>
-                          ))}
-                        </div>
+                  {/* Informações da empresa */}
+                  <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
+                    <div className="flex items-center gap-1">
+                      <Building className="h-4 w-4" />
+                      <span>{job.company}</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <MapPin className="h-4 w-4" />
+                      <span>{job.location}</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Briefcase className="h-4 w-4" />
+                      <span>{job.type}</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Clock className="h-4 w-4" />
+                      <span>{job.postedAt}</span>
+                    </div>
+                  </div>
+
+                  {/* Tecnologias e nível */}
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <p className="text-sm font-medium mb-2">Tecnologias necessárias:</p>
+                      <div className="flex flex-wrap gap-2">
+                        {job.technologies.map((tech, index) => (
+                          <Badge key={index} variant="outline">
+                            {tech}
+                          </Badge>
+                        ))}
                       </div>
                     </div>
-                  </CardContent>
-                  <CardFooter className="px-6 pb-6 pt-0 flex justify-end">
-                    <Button>Ver detalhes</Button>
-                  </CardFooter>
-                </Card>
-              ))}
-            </div>
-          </div>
+                    <div className="text-right">
+                      <Badge className="mb-2">{job.level}</Badge>
+                      <p className="text-lg font-bold text-primary">{job.salary}</p>
+                    </div>
+                  </div>
+
+                  {/* Botões de ação */}
+                  <div className="flex gap-3 pt-4">
+                    <Button className="flex-1">Candidatar-se</Button>
+                    <Button variant="outline" size="icon">
+                      <Bookmark className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </div>
     </div>
